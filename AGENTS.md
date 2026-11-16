@@ -164,3 +164,5 @@ Rules:
 - **Don't mention internal reference projects** the work was ported from or benchmarked against — release notes describe what the user gets, not the lineage
 - **No internal jargon** — describe user-visible behavior; plan numbers are fine in passing ("plan 028") but never as the headline
 - Keep bullets to one or two lines apiece
+
+- 硬件稳定性（随机 SEGV/ICE、编译产物损坏、页缓存/位翻转）：工具与判据全在 `~/hw-stability`（入口 `~/hw-stability/AGENTS.md`，技能 `hw-stability-tools`）；本项目只按全局 AGENTS 硬性规则 12 上交证据到 `~/hw-stability/evidence/inbox/`，不在此复述。
