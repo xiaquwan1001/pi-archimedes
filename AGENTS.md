@@ -1,3 +1,5 @@
+<!-- 本文件不注入：同目录 `AGENTS.override.md` 优先（resource-loader 候选序 override → AGENTS.md），生效的是 override；本文件只在 `git show HEAD:AGENTS.md` 按需读。上游文件，勿按本地偏好改写。 -->
+
 # AGENTS.md
 
 Rules for AI agents working on this monorepo.
@@ -143,7 +145,7 @@ When releasing a new version, apply these steps after bumping versions but befor
 
 2. **Type-check all packages** — run `npx tsc --noEmit` in each of the 12 package directories (11 components + session-name). Don't release if any check fails.
 
-3. **Ensure CI is green** — check the latest CI run on `feature/monorepo-split` (or `main`). Don't release on a red build.
+3. **Ensure CI is green** — check the latest CI run on `main`: `gh run list -b main --limit 1`. Don't release on a red build.
 
 4. **Tag and push** — use annotated tag with `v` prefix: `git tag -a v0.x.y -m "Release v0.x.y"` then `git push origin v0.x.y`. The release workflow handles publishing to npm.
 
