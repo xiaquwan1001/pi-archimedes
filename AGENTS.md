@@ -1,5 +1,7 @@
 # AGENTS.md
 
+> 仓库术语（package/plugin 名、API、命令、上游文档名）保留英文原文；**汇报与新增文档正文用中文**（全局 `AGENTS.md` 开头口径）。
+
 Rules for AI agents working on this monorepo. **Only rules every change runs into live here.**
 The long-form procedures — adding a package, publishing, CI, dependency pins — live in
 `CONTRIBUTING.md`; open the one section you need instead of reciting the flow from memory.
@@ -49,10 +51,10 @@ The long-form procedures — adding a package, publishing, CI, dependency pins �
 1. **Never decide a colour by parsing an escape string — ask the theme for a token.** A theme token may be `""` (terminal default, rendered `\x1b[49m` — truthy, so `?? FALLBACK` never falls back); read `theme.colors[token]` / `theme.style(...)`, treat a terminal-default token as *no colour* (`isTerminalDefault()` / `NO_PANEL_COLOR` in `packages/core/src/chrome.ts`). Emitting codes and `packages/diff/src/ansi/` are exempt. Full wording: `docs/features/ui.md`.
 2. **Never `console.*` from a render or event path — use `core/log`'s `diag`.** A stray write smears a fullscreen differential frame, and a subagent child discards every non-JSON stdout line. Use `diag(scope, msg)` / `describeError(err)`; user-facing text goes to `ctx.ui.notify`. Guard: `packages/core/src/log-discipline.test.ts` (allow-list is `packages/core/src/log.ts` alone; `packages/diff` keeps a sibling copy).
 
-### Verification Order (run independently, wait for each)
+### Verification Order (per package — the tscs are independent and may run in parallel)
 1. `npx tsc --noEmit` in the package directory
 2. If it fails: read the error → read the relevant file → fix → re-run
-3. Loop-break: if a check fails twice without edits between, stop and report BLOCKED
+3. Loop-break: if a check fails twice without edits between, **switch approach** (re-read the error, change the check surface). If it still fails, write `■ 结束` and name the blocking point — `BLOCKED` is not a stop signal
 
 ### Commits
 - `chore:` for infra (workflows, config, README)
